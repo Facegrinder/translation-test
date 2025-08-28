@@ -9,18 +9,18 @@ if (!i18next.isInitialized) {
   i18next
     .use(HttpBackend)
     .use(initReactI18next)
-  .init<HttpBackendOptions>({
+    .init<HttpBackendOptions>({
       lng: 'en',
       fallbackLng: 'en',
       ns: ['common'],
       defaultNS: 'common',
       interpolation: { escapeValue: false },
       backend: {
-    // direct call to Go backend; no Vite proxy needed
-    loadPath: 'http://localhost:8080/locales/{{lng}}/{{ns}}.json',
+        // direct call to Go backend; no Vite proxy needed
+        loadPath: 'http://localhost:8080/locales/{{lng}}/{{ns}}.json',
       },
-  })
-  .catch((e: unknown) => console.error('i18next init failed', e))
+    })
+    .catch((e: unknown) => console.error('i18next init failed', e))
 }
 
 export function App() {
@@ -28,7 +28,7 @@ export function App() {
 
   useEffect(() => {
     // Optional: verify backend is reachable in dev
-  fetch('http://localhost:8080/healthz').catch(() => {})
+    fetch('http://localhost:8080/healthz').catch(() => { })
   }, [])
 
   return (
