@@ -15,6 +15,7 @@ var translations = map[string]map[string]map[string]string{
 			"title":     "Hello, World!",
 			"welcome":   "Welcome to i18next with Go backend",
 			"helloUser": "Hello, {{name}}",
+			"stuff":     "Stuff, {{house}}",
 		},
 	},
 	"de": {
@@ -22,6 +23,7 @@ var translations = map[string]map[string]map[string]string{
 			"title":     "Hallo, Welt!",
 			"welcome":   "Willkommen bei i18next mit Go-Backend",
 			"helloUser": "Hallo, {{name}}",
+			"stuff":     "Zeug, {{house}}",
 		},
 	},
 }
@@ -33,6 +35,40 @@ func main() {
 	mux.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
 		_, _ = w.Write([]byte("ok"))
+	})
+
+	// Manifest endpoint to discover available languages and namespaces
+	// Shape: { "languages": ["en","de"], "namespaces": ["common"] }
+	mux.HandleFunc("/locales/manifest.json", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
+
+		// collect languages
+		langs := make([]string, 0, len(translations))
+		for l := range translations {
+			langs = append(langs, l)
+		}
+
+		// collect namespaces (union across languages)
+		nsSet := make(map[string]struct{})
+		for _, byNS := range translations {
+			for ns := range byNS {
+				nsSet[ns] = struct{}{}
+			}
+		}
+		namespaces := make([]string, 0, len(nsSet))
+		for ns := range nsSet {
+			namespaces = append(namespaces, ns)
+		}
+
+		payload := map[string]any{
+			"languages":  langs,
+			"namespaces": namespaces,
+		}
+		if err := json.NewEncoder(w).Encode(payload); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
 	})
 
 	// Serve i18next backend format: /locales/{lng}/{ns}.json

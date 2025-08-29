@@ -1,0 +1,6 @@
+{
+  "helloUser": "Hallo, {{name}}",
+  "stuff": "Zeug, {{house}}",
+  "title": "Hallo, Welt!",
+  "welcome": "Willkommen bei i18next mit Go-Backend"
+}

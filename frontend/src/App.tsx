@@ -35,6 +35,8 @@ export function App() {
     <>
       <h1>{t('title')}</h1>
       <p>{t('welcome')}</p>
+      <h2>{t('helloUser', { name: 'Ada' })}</h2>
+      <h3>{t('stuff', { house: 'My House' })}</h3>
 
       <div style={{ marginTop: 16 }}>
         <button onClick={() => i18n.changeLanguage('en')}>English</button>

@@ -1,0 +1,8 @@
+export interface Resources {
+  "common": {
+    "helloUser": "Hello, {{name}}",
+    "stuff": "Stuff, {{house}}",
+    "title": "Hello, World!",
+    "welcome": "Welcome to i18next with Go backend"
+  }
+}

@@ -7,6 +7,17 @@ Currently, two official plugins are available:
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
+## i18n workflow
+
+This project pulls translations from the Go backend and generates TypeScript-typed resources for i18next.
+
+- Pull translations (writes JSON files to `src/locales/{lng}/{ns}.json`):
+  - `npm run i18n:pull`
+- Generate TypeScript `Resources` interface from the JSON files:
+  - `npm run i18n:types`
+
+The app uses `i18next-http-backend` during runtime, so you can either rely on live backend fetching or use the pulled files for type inference and offline inspection. The default namespace is `common`.
+
 ## Expanding the ESLint configuration
 
 If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:

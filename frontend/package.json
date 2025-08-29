@@ -7,11 +7,15 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+  "i18n:pull": "node ./scripts/pull-translations.mjs",
+  "i18n:types": "i18next-resources-for-ts interface -i ./src/locales/en -o ./src/@types/resources.ts && node ./scripts/fix-resources-type.mjs",
+  "interface": "npm run i18n:types"
   },
   "dependencies": {
     "i18next": "^25.4.2",
     "i18next-http-backend": "^3.0.2",
+    "i18next-resources-for-ts": "^1.7.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-i18next": "^15.7.3"
